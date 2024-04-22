@@ -1,7 +1,7 @@
-FROM alpine:3.13.5
+FROM alpine:latest
 
 # Whenever possible, install tools using the distro package manager
-RUN apk add --no-cache tini ttyd socat nginx unzip openssl openssh ca-certificates  && \
+RUN apk add --no-cache tini ttyd socat nginx unzip openssl openssh ca-certificates ncdu tree && \
 # Do some configuration for nginx
     echo "daemon off;" >> /etc/nginx/nginx.conf && \
     mkdir /run/nginx && \
@@ -9,8 +9,8 @@ RUN apk add --no-cache tini ttyd socat nginx unzip openssl openssh ca-certificat
     echo "<html><head><title>Welcome to Nginx</title></head><body><h1>Nginx works!</h1></body></html>" > /var/www/localhost/htdocs/index.html && \
     chown -R 0:82 /var/www/localhost/htdocs && \
 # Download, install and configure ngrok
-    wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && \
-    unzip ngrok-stable-linux-amd64.zip && \
+    wget -q https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz && \
+    tar -zxvf ngrok-stable-linux-amd64.zip && \
     mv ngrok /bin/ngrok && \
     rm ngrok-stable-linux-amd64.zip && \
     echo "web_addr: 0.0.0.0:4040" > /root/ngrok.yml && \
@@ -23,4 +23,4 @@ ENV TINI_KILL_PROCESS_GROUP=1
 
 EXPOSE 7681 4040 80
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD [ "ttyd", "-s", "3", "-t", "titleFixed=/bin/sh", "-t", "rendererType=webgl", "-t", "disableLeaveAlert=true", "/bin/sh", "-i", "-l" ]
+CMD [ "ttyd", "-s", "3", "-t", "titleFixed=/bin/bash", "-t", "rendererType=webgl", "-t", "disableLeaveAlert=true", "/bin/bash", "-i", "-l" ]
