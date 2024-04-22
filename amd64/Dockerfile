@@ -10,9 +10,9 @@ RUN apk add --no-cache tini ttyd socat nginx unzip openssl openssh ca-certificat
     chown -R 0:82 /var/www/localhost/htdocs && \
 # Download, install and configure ngrok
     wget -q https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz && \
-    tar -zxvf ngrok-stable-linux-amd64.zip && \
+    tar -zxvf ngrok-stable-linux-amd64.tgz && \
     mv ngrok /bin/ngrok && \
-    rm ngrok-stable-linux-amd64.zip && \
+    rm ngrok-stable-linux-amd64.tgz && \
     echo "web_addr: 0.0.0.0:4040" > /root/ngrok.yml && \
 # Configure a nice terminal
     echo "export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> /etc/profile && \
