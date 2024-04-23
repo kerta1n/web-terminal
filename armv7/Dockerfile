@@ -4,15 +4,15 @@ FROM alpine:latest
 RUN apk add --no-cache tini ttyd socat nginx unzip openssl openssh ca-certificates ncdu tree && \
 # Do some configuration for nginx
     echo "daemon off;" >> /etc/nginx/nginx.conf && \
-    mkdir /etc/nginx && \
+    mkdir /etc/nginx/conf.d && \
     echo "server { listen 80 default_server; root /var/www/localhost/htdocs; location / { try_files \$uri /index.html; } }" > /etc/nginx/conf.d/default.conf && \
     echo "<html><head><title>Welcome to Nginx</title></head><body><h1>Nginx works!</h1></body></html>" > /var/www/localhost/htdocs/index.html && \
     chown -R 0:82 /var/www/localhost/htdocs && \
 # Download, install and configure ngrok
     wget -q https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.tgz && \
-    tar -zxvf ngrok-stable-linux-arm.tgz && \
+    tar -zxvf ngrok-v3-stable-linux-arm.tgz && \
     mv ngrok /bin/ngrok && \
-    rm ngrok-stable-linux-arm.tgz && \
+    rm ngrok-*-arm.tgz && \
     echo "web_addr: 0.0.0.0:4040" > /root/ngrok.yml && \
 # Configure a nice terminal
     echo "export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> /etc/profile && \
