@@ -1,0 +1,5 @@
+buildx.sh
+amd64
+arm64
+armv7
+.github
